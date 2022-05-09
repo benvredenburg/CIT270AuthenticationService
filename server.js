@@ -3,7 +3,7 @@ const bodyParser = require('body-parser'); // import body parser
 const port = 3000;
 const app = express(); // use library
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json()); // Use body parser
 
 app.listen(port, ()=>{
     console.log('listening on port: ' + port);
