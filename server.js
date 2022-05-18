@@ -1,23 +1,32 @@
-const express = require('express'); // import express library
-const bodyParser = require('body-parser'); // import body parser
-const md5 = require('md5'); // import md5
+const express = require('express'); 
+const port = 3000; 
+const app = express();
+const md5 = require('md5');
+const bodyParser = require('body-parser');
 const {createClient} = require('redis');
-createClient.connect;
-const app = express(); // use express library
-app.use(bodyParser.json()); // Use body parser
-const port = 3000; // define port const variable
+const redisClient = createClient (
+{
+    socket: {
+        port: 6379,
+        host: "127.0.0.1",
+    }
+}
+);
+
+app.use(bodyParser.json());
 
 app.listen(port, ()=>{
     console.log('listening on port: ' + port);
-}) // listen
+})
 
 const validatePassword = async(request, response) => {
-    const requestHashedPassword = md5(request.body.password);
-    const redisHashedPassword = await redisClient.hget('passwords', request.body.userName);
+    await redisClient.connect(); // Create TCP socket with Redis
+    const requestHashedPassword = md5(request.body.password); // Get the password from the body and hash it
+    const redisHashedPassword = await redisClient.hGet('passwords', request.body.userName); // Read password from Redis
+    const loginRequest = request.body;
+    // console.log("Request Body", JSON.stringify(request.body)); 
 
-    const password = await redisClient.hget(request.body.userName);
-
-    if (request.body.userName == 'vredenburgben@gmail.com' && requestHashedPassword == redisHashedPassword) {
+    if (requestHashedPassword == redisHashedPassword) {
         response.status(200);
         response.send('Welcome');
     } else {
@@ -27,5 +36,7 @@ const validatePassword = async(request, response) => {
 }
 
 app.get('/',(request,response)=>{
-    response.send('Hello, welcome to localhost')
-}); // response
+    response.send('Hello')
+}); 
+
+app.post('/login', validatePassword);
