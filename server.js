@@ -15,14 +15,14 @@ const redisClient = createClient (
 
 app.use(bodyParser.json());
 
-app.listen(port, ()=>{
+app.listen(port, async ()=>{
+    await redisClient.connect();
     console.log('listening on port: ' + port);
 })
 
 const validatePassword = async(request, response) => {
-    await redisClient.connect(); // Create TCP socket with Redis
-    const requestHashedPassword = md5(request.body.password); // Get the password from the body and hash it
-    const redisHashedPassword = await redisClient.hGet('passwords', request.body.userName); // Read password from Redis
+    const requestHashedPassword = md5(request.body.password); 
+    const redisHashedPassword = await redisClient.hGet('passwords', request.body.userName); 
     const loginRequest = request.body;
     // console.log("Request Body", JSON.stringify(request.body)); 
 
@@ -34,9 +34,17 @@ const validatePassword = async(request, response) => {
         response.send('Unauthorized');
     }
 }
-
 app.get('/',(request,response)=>{
     response.send('Hello')
 }); 
 
 app.post('/login', validatePassword);
+
+const registerPassword = async(request, response) => {
+    const userPassword = md5(request.body.password);
+    redisClient.hSet('passwords', request.body.userName, userPassword);
+    response.send("User Created");
+
+}
+
+app.post('/signup', registerPassword);
