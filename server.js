@@ -24,7 +24,6 @@ const validatePassword = async(request, response) => {
     const requestHashedPassword = md5(request.body.password); 
     const redisHashedPassword = await redisClient.hGet('passwords', request.body.userName); 
     const loginRequest = request.body;
-    // console.log("Request Body", JSON.stringify(request.body)); 
 
     if (requestHashedPassword == redisHashedPassword) {
         response.status(200);
@@ -45,7 +44,6 @@ const registerPassword = async(request, response) => {
     await redisClient.hSet('passwords', request.body.userName, userPassword);
     response.status(200);
     response.send("User Created");
-
 }
 
 app.post('/signup', registerPassword);
