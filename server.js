@@ -42,7 +42,8 @@ app.post('/login', validatePassword);
 
 const registerPassword = async(request, response) => {
     const userPassword = md5(request.body.password);
-    redisClient.hSet('passwords', request.body.userName, userPassword);
+    await redisClient.hSet('passwords', request.body.userName, userPassword);
+    response.status(200);
     response.send("User Created");
 
 }
