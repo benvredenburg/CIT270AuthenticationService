@@ -29,7 +29,7 @@ https.createServer ({
 const validatePassword = async(request, response) => {
     const requestHashedPassword = md5(request.body.password); 
     const redisHashedPassword = await redisClient.hGet('passwords', request.body.userName); 
-    //const loginRequest = request.body;
+    //const loginRequest = request.body; 
 
     if (requestHashedPassword == redisHashedPassword) {
         response.status(200);
