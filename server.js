@@ -6,13 +6,10 @@ const bodyParser = require('body-parser');
 const {createClient} = require('redis');
 const https = require('https');
 const fs = require('fs');
-const redisClient = createClient (
+const redisClient = createClient(
 {
-    socket: {
-        port: 6379,
-        host: "127.0.0.1",
+    url: 'redis://default@10.128.0.2',
     }
-}
 );
 
 app.use(bodyParser.json());
