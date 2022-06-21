@@ -36,7 +36,7 @@ const validatePassword = async(request, response) => {
         response.send('Unauthorized');
     }
 }
-app.get('/',(request,response)=>{
+app.get('/',(request, response)=>{
     response.send('Hello')
 }); 
 
