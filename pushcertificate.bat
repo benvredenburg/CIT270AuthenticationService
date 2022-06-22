@@ -1,1 +1,1 @@
-scp server.key server.cert benjamin.node.cit270.com:~/CIT270AuthenticationService/
+scp server.key server.cert benjamin-node.cit270.com:~/CIT270AuthenticationService/
