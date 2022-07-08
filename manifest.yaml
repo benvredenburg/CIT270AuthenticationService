@@ -1,0 +1,41 @@
+#version of kubernetes api
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: benjamin-cit270
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: benjamin-cit270
+    template:
+      metadata:
+        labels:
+          app: benjamin-cit270
+      spec:
+        containers:
+          - name: benjamin-cit270
+            image: vred1989/cit270
+            command: ["npm"]
+            args: ["run", "start"]
+            ports:
+              - containerPort: 443
+            resources:
+              limits:
+                cpu: ".125"
+                memory: "500Mi"
+              requests:
+                cpu: ".1"
+                memory: "250Mi"
+            livenessProbe:
+              httpGet:
+                path: /
+                port: 443
+              initialDelaySeconds: 3
+              periodSeconds: 3
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 443
+              initialDelaySeconds: 3
+              periodSeconds: 3
