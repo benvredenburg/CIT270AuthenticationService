@@ -8,7 +8,7 @@ const https = require('https');
 const fs = require('fs');
 const redisClient = createClient(
 {
-    url: 'redis://default@10.128.0.2',
+    url: 'redis://35.184.170.104:6379',
     }
 );
 
