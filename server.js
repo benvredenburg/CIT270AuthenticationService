@@ -1,5 +1,5 @@
 const express = require('express'); 
-const port = 443; 
+const port = 3000; 
 const app = express();
 const md5 = require('md5');
 const bodyParser = require('body-parser');
@@ -14,11 +14,16 @@ const redisClient = createClient(
 
 app.use(bodyParser.json());
 
-https.createServer ({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert'),
-    passphrase: 'P@ssw0rd',
-}, app).listen(port, async ()=>{
+// https.createServer ({
+//     key: fs.readFileSync('server.key'),
+//     cert: fs.readFileSync('server.cert'),
+//     passphrase: 'P@ssw0rd',
+// }, app).listen(port, async ()=>{
+//     await redisClient.connect();
+//     console.log('listening on port: ' + port);
+// })
+
+app.listen(port, async()=>{
     await redisClient.connect();
     console.log('listening on port: ' + port);
 })

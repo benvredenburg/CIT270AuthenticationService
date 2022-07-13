@@ -19,7 +19,7 @@ spec:
           command: ["npm"]
           args: ["run", "start"]
           ports:
-            - containerPort: 443
+            - containerPort: 3000
           resources:
             limits:
               cpu: ".125"
@@ -30,15 +30,15 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 443
-              scheme: HTTPS
+              port: 3000
+              scheme: HTTP
             initialDelaySeconds: 3
             periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /
-              port: 443
-              scheme: HTTPS
+              port: 3000
+              scheme: HTTP
             initialDelaySeconds: 3
             periodSeconds: 3
 
@@ -52,5 +52,5 @@ spec:
     app: benjamin-cit270
   type: LoadBalancer
   ports:
-    - port: 443
-      targetPort: 443
+    - port: 80
+      targetPort: 3000
