@@ -17,5 +17,5 @@ spec:
     http:
       paths:
       - backend:
-        serviceName: benjamin-cit270-loadbalancer
-        servicePort: 80
+          serviceName: benjamin-cit270-loadbalancer
+          servicePort: 80
