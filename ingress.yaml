@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: benjamin-ingress
+  namespace: benjamin-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: 'nginx'
+    cert-manager.io/cluster-issuer: 'letsencrypt-cluster-issuer'
+spec:
+  tls:
+  - hosts:
+    - benjamin.node.cit270
+    secretName: benjamin-tls
+  rules:
+  - host: benjamin.node.cit270
+    http:
+      paths:
+      - backend:
+        serviceName: benjamin-cit270-loadbalancer
+        servicePort: 80
