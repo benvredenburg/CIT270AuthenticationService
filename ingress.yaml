@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - benjamin.node.cit270
+    - benjamin-node.cit270.com
     secretName: benjamin-tls
   rules:
-  - host: benjamin.node.cit270
+  - host: benjamin-node.cit270.com
     http:
       paths:
       - backend:
